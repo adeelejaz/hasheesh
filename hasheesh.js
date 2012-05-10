@@ -1,4 +1,4 @@
-(function(window, undefined){
+(function($, window, undefined){
   window.hasheesh = {
     
     // Namespace to look at
@@ -42,6 +42,7 @@
           if ( $.isFunction(callback) ) {
             callback();
           }
+        }
       });
 
     }
@@ -49,4 +50,4 @@
 
   // Get the app hooked to hasheesh
   window.onhashchange = hasheesh.load;
-})(window);
+})(jQuery, window);
