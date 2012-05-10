@@ -13,10 +13,16 @@
 
       var hashObj = location.hash.slice(1);
 
-      if ( typeof namespace[hashObj] === "object" && typeof namespace[hashObj].init === "function" ) {
-        namespace[hashObj].init();
+      if ( typeof hasheesh.namespace[hashObj] === "object" && typeof hasheesh.namespace[hashObj].init === "function" ) {
+        hasheesh.namespace[hashObj].init();
       } else {
-        yepnope( "js/app/" + hashObj + "/init.js" );
+        $.ajax({
+          url: "js/app/" + hashObj + "/init.js",
+          dataType: "script",
+          success: function() {
+            hasheesh.namespace[hashObj].init();
+          }
+        });
       }
 
     },
@@ -28,11 +34,14 @@
         context = "#container";
       }
 
-      $.get( "js/app/" + file + ".html", function(template) {
-        $( context ).html( template );
-        if ( $.isFunction(callback) ) {
-          callback();
-        }
+      $.ajax({
+        url: "js/app/" + file + ".html",
+        dataType: "html", 
+        success: function(template) {
+          $( context ).html( template );
+          if ( $.isFunction(callback) ) {
+            callback();
+          }
       });
 
     }
